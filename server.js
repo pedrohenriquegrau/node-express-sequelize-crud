@@ -13,12 +13,11 @@ app.use(express.json());
 
 app.use(express.urlencoded({extended:true}));
 
-app.get("/", (req,res)=>{
-    res.json({message: 'hello word!'})
-});
-
-const port = process.env.port || 8080;
-app.listen(port, () => {
-    console.log(`server funcionando na porta ${port}.`);
+const db = require("./app/models");
+db.sequelize.sync()
+.then(() => {
+    console.log("Banco conectado!");
 })
-
+.catch((err) => {
+    console.log("Falha ao acessar banco de dados: " + err.menssage);
+})
