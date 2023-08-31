@@ -9,7 +9,6 @@ exports.create = (req, res) => {
         });
         return;
     }
-
     const item = {
         name: req.body.name,
         description: req.body.description,
@@ -114,9 +113,30 @@ exports.delete = (req, res) => {
 };
 
 exports.deleteAll = (req, res) => {
-
+    Item.destroy({
+        where: {},
+        truncate: false
+    })
+       .then(nums => {
+           res.send({ message: `${nums} Itens foram apagados com sucesso.` });
+       })
+       .catch(err => {
+           res.status(500).send({
+               message: 
+               err.message || "Algum erro ocorreu ao tentar apagar todos os itens."
+          });
+        });
 };
 
 exports.findAllFlammbes = (req, res) => {
-
+    Item.findAll({ where: { is_flammble: true } })
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Algum erro ocorreu ao tentar pesquisar todos os itens inflamáveis."
+      });
+    });
 };
