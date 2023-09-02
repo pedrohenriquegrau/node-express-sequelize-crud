@@ -13,11 +13,13 @@ app.use(express.json());
 
 app.use(express.urlencoded({extended:true}));
 
+
 const db = require("./app/models");
 db.sequelize.sync()
 .then(() => {
-    console.log("Banco conectado!");
+    console.log("Banco sincronizado!");
 })
 .catch((err) => {
     console.log("Falha ao acessar banco de dados: " + err.menssage);
-})
+});
+
