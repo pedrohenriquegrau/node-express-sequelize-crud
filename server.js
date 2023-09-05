@@ -13,7 +13,6 @@ app.use(express.json());
 
 app.use(express.urlencoded({extended:true}));
 
-
 const db = require("./app/models");
 db.sequelize.sync()
 .then(() => {
@@ -23,3 +22,13 @@ db.sequelize.sync()
     console.log("Falha ao acessar banco de dados: " + err.menssage);
 });
 
+require("./app/routes/item.routes")(app);
+
+app.get("/", (req,res) => {
+    res.json({message: 'hello world'})
+});
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server funcionando na porta ${PORT}.`)
+});
